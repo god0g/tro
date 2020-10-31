@@ -8,7 +8,6 @@ lib.GetCustomerList = function(){
 
 lib.AddCustomer = function(data){
     var sqlText = 'insert into Customers(sTpaCode,sCustFirstName,sCustLastName,sCustEmail,sCustPhoneNumber,sCustAddress1,sCustCountry,sCustState,sCustZip,iInsertUserId) values(?,?,?,?,?,?,?,?,?,?)';
-    console.log(data);
     return db.execute(sqlText,data);
 };
 
