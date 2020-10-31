@@ -41,5 +41,3 @@ app.use((req,res,next)=>{
 app.listen(3000,()=>{
 console.log('application listen on http://localhost:3000');
 });
-
-// test main 2
