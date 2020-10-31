@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 
 const loginRoute = require('./router/login');
 const formRoute = require('./router/form');
-const testRoute = require('./router/test');
 const customerRoute = require('./router/customers');
 const auth = require('./middleware/is-auth');
 var dbSession =require('./util/databasesession');
@@ -29,7 +28,6 @@ app.get('/',(req,res)=>{
 
 app.use('/login',loginRoute);
 app.use('/form',auth,formRoute);
-app.use('/test',auth,testRoute);
 app.use('/customers',auth,customerRoute);
 
 
