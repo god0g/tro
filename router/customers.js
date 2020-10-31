@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const db = require('../util/database')
-
+let customerService= require('../services/CustomerService')
 
 
 
@@ -10,10 +9,12 @@ router.get('/',function(req,res){
 });
 
 router.get('/list',function(req,res){
-    db.execute('select * from Customers').then(([rows,fieldData])=>{
-       res.json(rows);
-    });
+   customerService.GetCustomerList().then((rows) => {
+      res.json(rows);
+   });
 });
+
+
 
 
 
