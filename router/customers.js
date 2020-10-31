@@ -15,6 +15,18 @@ router.get('/list',function(req,res){
 });
 
 
+router.get('/form',function(req,res){
+   res.render('form',{foo:'execute form'});
+});
+
+router.post('/form', (req, res) => {
+   customerService.SaveCustomer(req).then(() => {
+       res.redirect('/customers');
+   }).catch((err) => { console.log(err) });
+});
+
+
+
 
 
 
