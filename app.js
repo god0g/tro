@@ -4,7 +4,6 @@ const ejs = require('ejs');
 const bodyParser = require('body-parser');
 
 const loginRoute = require('./router/login');
-const formRoute = require('./router/form');
 const customerRoute = require('./router/customers');
 const auth = require('./middleware/is-auth');
 var dbSession =require('./util/databasesession');
@@ -19,7 +18,7 @@ app.use(dbSession);
 
 app.get('/',(req,res)=>{
     if (req.session.isLogin) {
-        res.redirect('/form');
+        res.redirect('/customers/form');
     }else{
         res.redirect('/login');
     }
@@ -27,7 +26,6 @@ app.get('/',(req,res)=>{
 
 
 app.use('/login',loginRoute);
-app.use('/form',auth,formRoute);
 app.use('/customers',auth,customerRoute);
 
 
