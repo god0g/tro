@@ -1,27 +1,31 @@
 <%- include('partials/header.ejs') %> 
 <div class="container">
   <div class="py-5 text-center">
-    <img class="d-block mx-auto mb-4" src="../assets/brand/trologo.png" alt="" width="72" height="72">
+    <img class="d-block mx-auto mb-4" src="/assets/brand/trologo.png" alt="" width="72" height="72">
     <h2>ตรอ.เหล่ายาวบริการ</h2>
 
   </div>
-
   <div class="row">
     <div class="col-md-12 order-md-1">
-      <h4 class="mb-3">เพิ่มข้อมูลลูกค้า</h4>
+      <% if (parseInt(customerId) > 0) { %>
+        <h4 class="mb-3">แก้ไขข้อมูลลูกค้า</h4>
+      <% } else { %>
+        <h4 class="mb-3">เพิ่มข้อมูลลูกค้า</h4>
+      <% } %> 
+
       <form method="POST" action="/customers/form" class="needs-validation" novalidate>
-        <input type="hidden" name="customerId">
+        <input type="hidden" name="customerId" value="<%= customerId %> ">
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="firstName">ชื่อ</label>
-            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="" value="" required>
+            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="" value="<%= customerInfo.sCustFirstName %>" required>
             <div class="invalid-feedback">
               กรุณากรอก ชื่อ
             </div>
           </div>
           <div class="col-md-6 mb-3">
             <label for="lastName">นามสกุล</label>
-            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="" value="" required>
+            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="" value="<%= customerInfo.sCustLastName %>" required>
             <div class="invalid-feedback">
               กรุณากรอก นามสกุล
             </div>
@@ -31,14 +35,14 @@
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="email">อีเมลล์ <span class="text-muted">(Optional)</span></label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com">
+            <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" value="<%= customerInfo.sCustEmail%> ">
             <div class="invalid-feedback">
               กรุณากรอก อีเมลล์ให้่ถูกต้อง
             </div>
           </div>
           <div class="col-md-6 mb-3">
-            <label for="phonenumber">เบอร์โทรศัพท์<span class="text-muted">(Optional)</span></label>
-            <input type="phonenumber" class="form-control" id="phonenumber" name="phonenumber" placeholder="0899837465" value="0988787656">
+            <label for="phonenumber">เบอร์โทรศัพท์</label>
+            <input type="phonenumber" data-mask="000 0000 000" class="form-control" id="phonenumber" name="phonenumber" value="<%= customerInfo.sCustPhoneNumber %> " required>
             <div class="invalid-feedback">
               กรุณากรอก เบอร์โทรศัพท์
             </div>
@@ -46,7 +50,7 @@
         </div>
         <div class="mb-3">
           <label for="address">ที่อยู่</label>
-          <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" required>
+          <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" value="<%= customerInfo.sCustAddress1 %> " required>
           <div class="invalid-feedback">
             กรุณากรอก ที่อยู่
           </div>

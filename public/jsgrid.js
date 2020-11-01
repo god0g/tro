@@ -31,18 +31,18 @@ $(function() {
             { name: "sCustZip", title:"Zip", type: "text", width:50,filtering: false },
             { type: "control", width: 100, editButton: false, deleteButton: false,
             itemTemplate: function(value, item) {
-               //var $result = jsGrid.fields.control.prototype.itemTemplate.apply(this, arguments);
-
                var $customEditButton = $("<button>").attr({class: "customGridEditbutton jsgrid-button jsgrid-edit-button"})
                  .click(function(e) {
-                   alert("ID: " + item.iId);
+                    document.location.href = '/customers/form/'+item.iId; 
                    e.stopPropagation();
                  });
 
-              var $customDeleteButton = $("<button>").attr({class: "customGridDeletebutton jsgrid-button jsgrid-delete-button"})
+              var $customDeleteButton = $("<button>").attr({class: "customGridDeletebutton jsgrid-button jsgrid-delete-button"
+                                                            ,"data-toggle":"modal"
+                                                            ,"data-target":"#exampleModal"
+                                                            ,type:"button"})
                .click(function(e) {
-                 alert("Title: " + item.iId);
-                 e.stopPropagation();
+                $('#confirmdelete').attr("action",'/customers/delete/'+item.iId)
                });
 
                return $("<div>").append($customEditButton).append($customDeleteButton);
