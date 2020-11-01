@@ -11,12 +11,33 @@ lib.GetCustomerList = function(){
  });
 };
 
+
+lib.GetCustomerById = function(id){
+    return customerRepository.GetCustomerById(id).then(([rows,fieldData])=>{
+       return rows[0];
+    });
+   };
+
+
+lib.DeleteCustomer = function(id){
+    let values = [id];
+    return customerRepository.DeleteCustomer(values).then(([rows,fieldData])=>{
+       return [rows,fieldData];
+    });
+   };
+   
+
 lib.SaveCustomer = function(req){
     if (parseInt(req.body.customerId)> 0){
-        console.log('edit customer');
-        return new Promise(function(resolve,reject){
-            return resolve();
-        });
+        var values = [req.body.firstName
+            , req.body.lastName
+            , req.body.email
+            , req.body.phonenumber
+            , req.body.address
+            , req.session.userInfo.iId
+            , new Date()
+            , parseInt(req.body.customerId)];
+        return customerRepository.UpdateCustomer(values);
     } else{
         var values =[
             req.session.userInfo.sTpaCode

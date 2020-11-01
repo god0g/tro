@@ -14,7 +14,7 @@ router.post('/', (req, res) => {
         {
             req.session.isLogin = true;
             req.session.userInfo = rows[0];
-            res.redirect('./customers/form');
+            res.redirect('./customers');
         }else{
             req.session.isLogin = false;
             res.redirect('./login');
