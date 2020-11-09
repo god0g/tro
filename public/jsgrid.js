@@ -1,6 +1,8 @@
 $(function() {
+    var vehicleId = document.getElementById("vehicleId");
+
     $("#jsGrid").jsGrid({
-        height: "70%",
+        height: "auto",
         width: "100%",
         filtering: false,
         inserting: false,
@@ -14,27 +16,32 @@ $(function() {
             loadData: function(filter) {
                 return $.ajax({
                     type: "GET",
-                    url: "/customers/list",
+                    url: "/customers/list/"+vehicleId.value,
                     data: filter
                 });
             }
         },
         fields: [
-            { name: "sTpaCode", title:"Tpa",  type: "text", width: 80 ,filtering: false },
-            { name: "sCustFirstName", title:"First Name", type: "text", width: 100, filtering: false },
-            { name: "sCustLastName", title:"Last Name", type: "text", width: 100 ,filtering: false },
-            { name: "sCustPhoneNumber", title:"Phone Number", type: "text", width:100,filtering: false },
-            { name: "sCustEmail", title:"Email", type: "text", width:150,filtering: false },
-            { name: "sCustAddress1", title:"Address", type: "text", width:200,filtering: false }, 
-            { name: "sCustCountry", title:"Country", type: "text", width:50,filtering: false },
-            { name: "sCustState", title:"State", type: "text", width:50,filtering: false },
-            { name: "sCustZip", title:"Zip", type: "text", width:50,filtering: false },
+            { name: "sCustFirstName", title:"ชื่อ", type: "text", width: 100, filtering: false },
+            { name: "sCustLastName", title:"นามสกุล", type: "text", width: 100 ,filtering: false },
+            { name: "sCustPhoneNumber", title:"เบอร์โทร", type: "text", width:100,filtering: false },
+            { name: "sCustEmail", title:"อีเมล", type: "text", width:150,filtering: false },
+            { name: "sCustAddress1", title:"ที่อยู่", type: "text", width:200,filtering: false }, 
+            { name: "sCustZip", title:"รหัสไปรษณี", type: "text", width:50,filtering: false },
             { type: "control", width: 100, editButton: false, deleteButton: false,
             itemTemplate: function(value, item) {
-               var $customEditButton = $("<button>").attr({class: "customGridEditbutton jsgrid-button jsgrid-edit-button"})
+               var $customEditButton = $("<button>").attr({class: "customGridEditbutton jsgrid-button jsgrid-edit-button"
+                                                         ,"data-toggle":"modal"
+                                                         ,"data-target":"#CustomerFormModal"
+                                                         ,type:"button"})
                  .click(function(e) {
-                    document.location.href = '/customers/form/'+item.iId; 
-                   e.stopPropagation();
+                   $('#customerform').attr("action",'/customers/form')
+                   $('#customerId').attr("value",item.iId)
+                   $('#firstName').attr("value",item.sCustFirstName)           
+                   $('#lastName').attr("value",item.sCustLastName)
+                   $('#phonenumber').attr("value",item.sCustPhoneNumber)
+                   $('#email').attr("value",item.sCustEmail)
+                   $('#address').attr("value",item.sCustAddress1)
                  });
 
               var $customDeleteButton = $("<button>").attr({class: "customGridDeletebutton jsgrid-button jsgrid-delete-button"
@@ -42,7 +49,7 @@ $(function() {
                                                             ,"data-target":"#exampleModal"
                                                             ,type:"button"})
                .click(function(e) {
-                $('#confirmdelete').attr("action",'/customers/delete/'+item.iId)
+                $('#confirmdelete').attr("action",'/customers/disable/'+item.iId)
                });
 
                return $("<div>").append($customEditButton).append($customDeleteButton);

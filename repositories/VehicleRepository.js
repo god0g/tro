@@ -29,7 +29,11 @@ lib.UpdateVehicle = function(data){
     return db.execute(sqlText,data);
 };
 lib.DeleteVehicle = function(id){
-    var sqlText = 'delete from Vehicle where iid = ?';
+
+    var sqlText = ` delete cv,v
+                    from Vehicles v
+                    left join CustomerVehicles cv ON cv.iVehicleId = v.iId
+                    where v.iId = ?`;
     return db.execute(sqlText,id);
 };
 

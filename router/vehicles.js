@@ -33,7 +33,6 @@ var vehicleInfo = {
     if (parseInt(id) > 0) {
         vehicleInfo = vehicleService.GetVehicleById(id).then((rows) => {
           if(rows==undefined){rows=vehicleInfo};
-          console.log(rows);
           res.render('vehicleform', { vehicleId: id, vehicleInfo: rows });
        });
     } else { res.render('vehicleform', { vehicleId: 0, vehicleInfo: vehicleInfo }); }
@@ -41,11 +40,27 @@ var vehicleInfo = {
  });
  
  router.post('/form', (req, res) => {
-    vehicleService.SaveVehicle(req).then(() => {
-        res.redirect('/Vehicles');
+    vehicleService.SaveVehicle(req).then(([result]) => {
+      if (parseInt(req.body.vehicleId)> 0){
+         res.redirect('/Vehicles/form/'+req.body.vehicleId);
+      }else{
+         if (parseInt(result.insertId)> 0){
+            res.redirect('/Vehicles/form/'+result.insertId);
+         }else{
+            res.redirect('/Vehicles');
+         }
+      }
     }).catch((err) => { console.log(err) });
  });
- 
+ router.post('/delete/:vehicleId',function(req,res){
+   let id = parseInt(req.params.vehicleId);
+   if (id>0) {
+      vehicleService.DeleteVehicle(id).then(() => {
+         res.redirect('back');
+      });
+   }else{  res.redirect('back')};
+});
+
   
 
  module.exports = router;
