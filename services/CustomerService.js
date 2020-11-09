@@ -11,6 +11,12 @@ lib.GetCustomerList = function(){
  });
 };
 
+lib.GetCustomerVehiucleList = function(vehicleId){
+    let values = [vehicleId]
+    return customerRepository.GetCustomerVehicleList(values).then(([rows,fieldData])=>{
+       return rows;
+    });
+   };
 
 lib.GetCustomerById = function(id){
     return customerRepository.GetCustomerById(id).then(([rows,fieldData])=>{
@@ -25,7 +31,14 @@ lib.DeleteCustomer = function(id){
        return [rows,fieldData];
     });
    };
-   
+
+lib.DeleteCustomerVehicle = function (id,parentId) {
+    let values = [id,parentId];
+    return customerRepository.DeleteCustomerVehicle(values).then(([rows, fieldData]) => {
+        return [rows, fieldData];
+    });
+};
+      
 
 lib.SaveCustomer = function(req){
     if (parseInt(req.body.customerId)> 0){
@@ -51,7 +64,16 @@ lib.SaveCustomer = function(req){
            ,req.body.zip
            ,req.session.userInfo.iId
        ]
-        return customerRepository.AddCustomer(values);
+       var vehicleId = parseInt(req.body.vehicleId);
+       if (vehicleId > 0) {
+        return customerRepository.AddCustomer(values).then(([result])=>{
+            values = [result.insertId , vehicleId , req.session.userInfo.iId]
+            return customerRepository.AddCustomerVehicle(values);
+        }); 
+       }else{
+           return customerRepository.AddCustomer(values);
+       }
+        
     } 
 
 }

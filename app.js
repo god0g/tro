@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const loginRoute = require('./router/login');
 const customerRoute = require('./router/customers');
 const vehicleRoute = require('./router/vehicles');
+const searchRounte = require('./router/search');
 const auth = require('./middleware/is-auth');
 var dbSession =require('./util/databasesession');
 
@@ -19,7 +20,7 @@ app.use(dbSession);
 
 app.get('/',(req,res)=>{
     if (req.session.isLogin) {
-        res.redirect('/customers/form');
+        res.redirect('/vehicles/form');
     }else{
         res.redirect('/login');
     }
@@ -29,6 +30,7 @@ app.get('/',(req,res)=>{
 app.use('/login',loginRoute);
 app.use('/customers',auth,customerRoute);
 app.use('/vehicles',auth,vehicleRoute);
+app.use('/search',auth,searchRounte);
 
 
 app.use((req,res,next)=>{

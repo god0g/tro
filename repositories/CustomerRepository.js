@@ -5,7 +5,12 @@ const lib = {};
 lib.GetCustomerList = function(){
     return db.execute('select * from Customers');
 };
-
+lib.GetCustomerVehicleList = function(data){
+    var sqlText = `select c.* from Customers c
+                    join CustomerVehicles cv on c.Iid = cv.iCustomerId
+                    where cv.iVehicleId = ?`
+    return db.execute(sqlText,data);
+};
 lib.GetCustomerById = function(id){
     return db.execute('select * from Customers where iid = ?',[id]);
 };
@@ -28,9 +33,21 @@ lib.UpdateCustomer = function(data){
     return db.execute(sqlText,data);
 };
 lib.DeleteCustomer = function(id){
-    var sqlText = 'delete from Customers where iid = ?';
+    var sqlText = `delete cv,c
+                   from Customers c
+                   left join CustomerVehicles cv ON cv.iCustomerId = c.iId
+                   where c.iId = ?`;
     return db.execute(sqlText,id);
 };
-
+lib.AddCustomerVehicle = function(data){
+    var sqlText = `insert into CustomerVehicles(iCustomerId,iVehicleId,iInsertUserId)
+                   values (?,?,?)`;
+    return db.execute(sqlText,data);
+};
+lib.DeleteCustomerVehicle = function(data){
+    var sqlText = `delete from CustomerVehicles
+                   where iCustomerId = ? and iVehicleId = ?`;
+    return db.execute(sqlText,data);
+};
 
 module.exports = lib;
