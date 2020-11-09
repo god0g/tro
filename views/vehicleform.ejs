@@ -1,0 +1,65 @@
+<%- include('partials/header.ejs') %> 
+<div class="container">
+  <div class="py-5 text-center">
+    <img class="d-block mx-auto mb-4" src="/assets/brand/trologo.png" alt="" width="72" height="72">
+    <h2>ตรอ.เหล่ายาวบริการ</h2>
+
+  </div>
+  <div class="row">
+    <div class="col-md-12 order-md-1">
+      <% if (parseInt(vehicleId) > 0) { %>
+        <h4 class="mb-3">แก้ไขข้อมูลรถ</h4>
+      <% } else { %>
+        <h4 class="mb-3">เพิ่มข้อมูลรถ</h4>
+      <% } %> 
+
+      <form method="POST" action="/vehicles/form" class="needs-validation" novalidate>
+        <input type="hidden" name="vehicleId" value="<%= vehicleId %> ">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="vehicleType">ประเภท</label>
+            <input type="text" class="form-control" id="vehicleType" name="vehicleType" placeholder="" value="<%= vehicleInfo.sType %>" required>
+            <div class="invalid-feedback">
+              กรุณากรอก ประเภทรถ
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="vehicleBrand">ยี่ห้อ</label>
+            <input type="text" class="form-control" id="vehicleBrand" name="vehicleBrand" placeholder="" value="<%= vehicleInfo.sBrand %>" required>
+            <div class="invalid-feedback">
+              กรุณากรอก ยี่ห้อรถ
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="model">โมเดล <span class="text-muted">(Optional)</span></label>
+            <input type="text" class="form-control" id="model" name="model" placeholder="" value="<%= vehicleInfo.sModel%> ">
+            <div class="invalid-feedback">
+              กรุณากรอก โมเดลให้่ถูกต้อง
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="vin">เลขตัวถัง</label>
+            <input type="vin" data-mask="000 0000 000" class="form-control" id="vin" name="vin" value="<%= vehicleInfo.sVin %> " required>
+            <div class="invalid-feedback">
+              กรุณากรอก เลขตัวถัง
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="registrationNumber">เลขทะเบียน</label>
+          <input type="text" class="form-control" id="registrationNumber" name="registrationNumber" placeholder="กง 9811" value="<%= vehicleInfo.sRegistrationNumber %> " required>
+          <div class="invalid-feedback">
+            กรุณากรอก เลขทะเบียน
+          </div>
+        </div>
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">บันทึก</button>
+        <hr class="mb-4">
+      </form>
+    </div>
+  </div>
+</div>
+  <%- include('partials/footer.ejs') %> 
