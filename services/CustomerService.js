@@ -77,7 +77,12 @@ lib.SaveCustomer = function(req){
     } 
 
 }
-
+lib.SearchCustomerVehicle = function(query){
+    var values = [query.carid,query.carid,query.name,query.name,query.phone,query.phone];
+    return customerRepository.SearchCustomerVehicle(values).then(([rows,fieldData])=>{
+       return rows;
+    });
+   };
 
 
 module.exports = lib;
