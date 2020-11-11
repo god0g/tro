@@ -19,12 +19,14 @@ router.get('/',function(req,res){
 });
 
 router.get('/list',function(req,res){
+   console.log(req.query);
    customerService.GetCustomerList().then((rows) => {
       res.json(rows);
    });
 });
 router.get('/list/:vehicleId',function(req,res){
    let id = parseInt(req.params.vehicleId);
+   console.log(req);
    customerService.GetCustomerVehiucleList(id).then((rows) => {
       res.json(rows);
    });

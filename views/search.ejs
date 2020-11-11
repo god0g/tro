@@ -1,32 +1,40 @@
-<%- include('partials/header.ejs') %> 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.1/jsgrid.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.1/jsgrid-theme.min.css" rel="stylesheet">
+<%- include('partials/header.ejs') %>
 <div class="container">
-  <div class="py-5 text-center">
-    <img class="d-block mx-auto mb-4" src="/assets/brand/trologo.png" alt="" width="72" height="72">
-    <h2>ตรอ.เหล่ายาวบริการ</h2>
+    <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="/assets/brand/trologo.png" alt="" width="72" height="72">
+        <h2>ตรอ.เหล่ายาวบริการ</h2>
 
-  </div>
-  <div class="row">
-    <div class="col-md-12 order-md-1">     
-      <form method="POST" action="/search" class="needs-validation" novalidate>
-        <div class="row">
-          <div class="col-md-4 mb-3">
-            <label for="firstName">ทะเบียน รถ</label>
-            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="" value="">
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="lastName">ชื่อ</label>
-            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="" value="">
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="lastName">เบอรโทร</label>
-            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="" value="">
-          </div>
-        </div>
-        <hr class="mb-4">
-        <button class="btn btn-primary btn-lg btn-block" type="submit">ค้นหา</button>
-        <hr class="mb-4">
-      </form>
     </div>
-  </div>
+    <div class="row">
+        <div class="col-md-12 order-md-1">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="carid">ทะเบียน รถ</label>
+                        <input type="text" class="form-control" id="carid" name="carid" placeholder="" value="">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="name">ชื่อ</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="" value="">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="phone">เบอรโทร</label>
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="" value="">
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <button id="btnsearch" name="btnsearch" class="btn btn-primary btn-lg btn-block" type="button">ค้นหา</button>
+                <hr class="mb-4">
+        </div>
+    </div>
+
+        <div id="jsGrid">
+        </div>
+<%- include('partials/confirm.ejs',{parentId:0}) %> 
+
 </div>
-  <%- include('partials/footer.ejs') %> 
+
+<%- include('partials/footer.ejs') %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.1/jsgrid.min.js"></script>
+<script src="/searchgrid.js"></script>

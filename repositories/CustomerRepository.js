@@ -50,4 +50,14 @@ lib.DeleteCustomerVehicle = function(data){
     return db.execute(sqlText,data);
 };
 
+lib.SearchCustomerVehicle = function(data){
+    var sqlText = `select v.sRegistrationNumber,concat(c.sCustFirstName ,' ', c.sCustFirstName) as sCustName,c.sCustPhoneNumber
+    from CustomerVehicles cv
+    join Customers c on cv.iCustomerId = c.iId
+    join Vehicles v on cv.iVehicleId = v.iId
+    where (v.sRegistrationNumber like concat('%',?,'%') or ? = '')
+    and (c.sCustFirstName like concat('%',?,'%') or ? = '')
+    and (c.sCustPhoneNumber like concat('%',?,'%') or ? = '')`
+    return db.execute(sqlText,data);
+};
 module.exports = lib;
